@@ -1,7 +1,7 @@
-# TheOdinProject-JavaScript-GUICalculator-2
+# TheOdinProject-JavaScript-EtchASketch-2
 The Odin Project Web Development Online Curriculum: Foundations
 
-## TheOdinProject-JavaScript-GUICalculator, Take 2
-This is my second take on this project; I was about halfway or more to completion back in 2019. This is my second go-around.
+## Project: Etch A Sketch, Take 2
+I originally completed this project in March 2019; this is my second version of it to catch back up and practice.
 
-All Topics: 
+All Topics: DOM manipulation, Error Handling, Template literals, math.random, Modern For loops, ForEach, Event Listeners, Arrow Functions, const variables
