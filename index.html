@@ -7,23 +7,46 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>TOP | Etch-A-Sketch 2</title>
+        <title>TOP | GUI Calculator 2</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="cssreset.css" TYPE="text/css">
         <link rel="stylesheet" href="style.css" TYPE="text/css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/5f680f06f4.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <h1>The Odin Project</h1>
-            <h3>Etch-A-Sketch 2</h3>
+        <h1 class="top">The Odin Project</h1>
+            <h3 class="top-sub">GUI Calculator 2</h3>
 
         <section id="play-area">
-            <button id=reset-dimensions class="player-btn"><i class="fas fa-play"></i><strong>Reset Dimensions, Change Colors</strong></button>
-            <div id="sketch-box"></div>
+            <div id="calculator-container">
+                <div id="calculator-display" class="calculator-display"></div>
+                <button id="button-seven" class="calculator-button">7</button>
+                <button id="button-eight" class="calculator-button">8</button>
+                <button id="button-nine" class="calculator-button">9</button>
+                <button id="button-divide" class="calculator-button">÷</button>
+                <button id="button-four" class="calculator-button">4</button>
+                <button id="button-five" class="calculator-button">5</button>
+                <button id="button-six" class="calculator-button">6</button>
+                <button id="button-multiply" class="calculator-button">×</button>
+                <button id="button-one" class="calculator-button">1</button>
+                <button id="button-two" class="calculator-button">2</button>
+                <button id="button-three" class="calculator-button">3</button>
+                <button id="button-subtract" class="calculator-button">-</button>
+                <button id="button-zero" class="calculator-button">0</button>
+                <button id="button-decimal" class="calculator-button">.</button>
+                <button id="button-equal" class="calculator-button">=</button>
+                <button id="button-add" class="calculator-button">+</button>
+                <button id="button-clear" class="calculator-button">Clear</button>
+
+
+
+            </div>
         </section>
     
         <script src=script.js></script>

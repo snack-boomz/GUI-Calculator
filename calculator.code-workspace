@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../TheOdinProject-JavaScript-EtchASketch-2"
+		},
+		{
+			"path": "../TheOdinProject-JavaScript-RockPaperScissorsGUI-2"
+		}
+	],
+	"settings": {}
+}

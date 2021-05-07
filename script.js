@@ -1,196 +1,279 @@
-/*
- *
- * Starting Box Dimensions: 800px, broken down into a 16x16 grid of squares, with a width of 50px, height of 50px
- * 
- */
 
-const playArea = document.getElementById('play-area');
+const calculatorContainer = document.getElementById('calculator-container');
 
-const sketchBox = document.getElementById('sketch-box');
+const calculatorDisplay = document.getElementById('calculator-display');
 
-const resetDimensionsBtn = document.getElementById('reset-dimensions');
+const calculatorDisplayContent = document.createElement('p');
+calculatorDisplayContent.classList.add('calculator-display-content');
 
-let sketchBoxElement = document.createElement('div');
+/* SOLUTION NUMBERS */
+let firstNumber = null;
+let secondNumber = null;
+let operator = null;
 
-// Starting Dimension: 800 / 16 = 50(50px width, 50px height) (This is the height and width of each element inside sketch box)
+/* CALCULATOR BUTTONS */
+const btnSeven = document.getElementById('button-seven');
+const btnEight = document.getElementById('button-eight');
+const btnNine = document.getElementById('button-nine');
+const btnDivide = document.getElementById('button-divide');
+const btnFour = document.getElementById('button-four');
+const btnFive = document.getElementById('button-five');
+const btnSix = document.getElementById('button-six');
+const btnMultiply = document.getElementById('button-multiply');
+const btnOne = document.getElementById('button-one');
+const btnTwo = document.getElementById('button-two');
+const btnThree = document.getElementById('button-three');
+const btnSubtract = document.getElementById('button-subtract');
+const btnZero = document.getElementById('button-zero');
+const btnDecimal = document.getElementById('button-decimal');
+const btnEqual = document.getElementById('button-equal');
+const btnAdd = document.getElementById('button-add');
+const btnClear = document.getElementById('button-clear');
 
-let sketchBoxElements = [];
-
-// create 256 elements in an array
-for (let i = 0; i < 256; i++) {
-    sketchBoxElements.push(i);
-}
-// append those 256 elements into the grid
-for (let element of sketchBoxElements) {
-    element = document.createElement('div');
-
-    element.classList = 'starting-sketch-box-element';
-    sketchBox.appendChild(element);
-}
-
-const elements = document.querySelectorAll('.starting-sketch-box-element');
-
-elements.forEach((element) => {
-
-    //add a hover listener to each element that
-    element.addEventListener('mouseover', () => {
-        element.classList.add("sketch-color");
-    });
-});
-
-/*
- * 
- *
- * New Box Dimensions: 800px, broken down into user's input of up to 100x100 squares, with a width of
- * 800 / userInput of Squares = width and height
- */
-resetDimensionsBtn.addEventListener('click', () => {
-
-    // reset grid colors and elements
-
-    const allElements = document.querySelectorAll('.starting-sketch-box-element');
-
-    allElements.forEach((element) => {
-        sketchBox.removeChild(element);
-    });
-
-    const allNewElements = document.querySelectorAll('.new-sketch-box-element');
-
-    allNewElements.forEach((element) => {
-        sketchBox.removeChild(element);
-    });
-
-    let looping = true;
-    while (looping) {
-        try {
-            let userDimensions = parseInt(prompt(`Enter your new Grid dimensions, up to 100x100 (1-100)`));
-            
-            if (!Number.isInteger(userDimensions) ) {
-                throw "Your input needs to be a number."
-            
-            } else if (userDimensions > 100) {
-                throw "Provide a number up to 100.";
-            
-            } else {
-
-                let totalSquares = userDimensions * userDimensions;
-                let squareWidth = 800 / userDimensions;
-                let squareHeight = 800 / userDimensions;
-            
-                let sketchBoxElements = [];
-            
-                // i is less than the total amount of squares inside the new grid
-                for (let i = 0; i < totalSquares; i++) {
-                    let string = `sketchBoxElement${i}`;
-                    sketchBoxElements.push(string);
-                }
-            
-                for (let element of sketchBoxElements) {
-                    element = document.createElement('div');
-                    element.style.width = `${squareWidth}`;
-                    element.style.height = `${squareHeight}`;
-                    element.classList.add('new-sketch-box-element');
-                    sketchBox.appendChild(element);
-                }
-            
-                const newElements = document.querySelectorAll('.new-sketch-box-element');
-                console.log(newElements)
-                newElements.forEach((element) => {
-                    let max = 255;
-                    let increment = 0;
-                    const rgbValue1 = Math.floor(Math.random() * max);
-                    const rgbValue2 = Math.floor(Math.random() * max);
-                    const rgbValue3 = Math.floor(Math.random() * max);
-            
-                    element.addEventListener('mouseover', () => {
-            
-                        // https://stackoverflow.com/questions/35306632/how-to-check-if-a-variable-is-empty-in-javascript
-                        if (!element.style.background || !element.style.background.length) {
-                            element.style.background = `rgb(${rgbValue1}, ${rgbValue2}, ${rgbValue3})`;
-                            console.log(element.style.background);
-                        } else {
-                            // reserved: if else statement is hit, make colors 10% darker each mouseover
-                            let tenPercentIncrementValue1 = rgbValue1 / 10;
-                            let tenPercentIncrementValue2 = rgbValue2 / 10;
-                            let tenPercentIncrementValue3 = rgbValue3 / 10;
-            
-                            if (increment == 0) {
-                                element.style.background = `rgb(${rgbValue1 - tenPercentIncrementValue1}, 
-                                                                ${rgbValue2 - tenPercentIncrementValue2}, 
-                                                                ${rgbValue3 - tenPercentIncrementValue3})`;
-                                console.log(element.style.background);
-                            } else if (increment == 1) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 2)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 2)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 2)})`;
-                                console.log(element.style.background);
-                            } else if (increment == 2) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 3)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 3)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 3)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 3) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 4)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 4)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 4)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 4) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 5)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 5)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 5)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 5) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 6)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 6)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 6)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 6) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 7)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 7)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 7)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 7) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 8)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 8)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 8)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 8) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 8)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 8)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 8)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 9) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 9)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 9)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 9)})`;                    
-                                console.log(element.style.background);
-                            } else if (increment == 10) {
-                                element.style.background = `rgb(${rgbValue1 - (tenPercentIncrementValue1 * 10)}, 
-                                                                ${rgbValue2 - (tenPercentIncrementValue2 * 10)}, 
-                                                                ${rgbValue3 - (tenPercentIncrementValue3 * 10)})`;                    
-                                console.log(element.style.background);
-                            }
-            
-                            increment += 1;
-            
-                        }
-            
-                    });
-                
-                });
-                
-                looping = false;
-
-            }
-        } catch(err) {
-            alert(`You've managed to produce an error, great job.\n
-                Error: ${err}`);
-            
+btnSeven.addEventListener('click', () => {
+    console.log(firstNumber, secondNumber, operator);
+    if (firstNumber) {
+        if (!secondNumber) {
+            calculatorDisplayContent.textContent = '';
+            calculatorDisplayContent.textContent += '7';
+            calculatorDisplay.appendChild(calculatorDisplayContent);
         }
+    } else {
+        calculatorDisplayContent.textContent += '7';
+        calculatorDisplay.appendChild(calculatorDisplayContent);
     }
-    
+
+});
+
+btnEight.addEventListener('click', () => {
+    if (firstNumber) {
+        if (!secondNumber) {
+            calculatorDisplayContent.textContent = '';
+            calculatorDisplayContent.textContent += '8';
+            calculatorDisplay.appendChild(calculatorDisplayContent);
+        }
+    } else {
+        calculatorDisplayContent.textContent += '8';
+        calculatorDisplay.appendChild(calculatorDisplayContent);
+    }
+});
+
+btnNine.addEventListener('click', () => {
+    if (firstNumber) {
+        if (!secondNumber) {
+            // clear display to display second number, if i.e. "firstNumber +" has already been entered
+            calculatorDisplayContent.textContent = '';
+            calculatorDisplayContent.textContent += '9';
+            calculatorDisplay.appendChild(calculatorDisplayContent);
+        }
+    } else {
+        calculatorDisplayContent.textContent += '9';
+        calculatorDisplay.appendChild(calculatorDisplayContent);
+    }
+
+});
+
+btnDivide.addEventListener('click', () => {
+    if (!firstNumber) {
+        firstNumber = parseInt(calculatorDisplayContent.textContent);
+        console.log(firstNumber);
+    } else if (!secondNumber) {
+        secondNumber = parseInt(calculatorDisplayContent.textContent);
+    }
 
 
 });
 
+btnFour.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '4';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnFive.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '5';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnSix.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '6';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnMultiply.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '×';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnOne.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '1';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnTwo.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '2';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnThree.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '3';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnSubtract.addEventListener('click', () => {
+    console.log(`
+    First Number: ${firstNumber}
+    Second Number: ${secondNumber}
+    Operator: ${operator}`)
+    if (!firstNumber) {
+        firstNumber = parseFloat(calculatorDisplayContent.textContent);
+        console.log(firstNumber);
+    } else if (!secondNumber && boolean) {
+        secondNumber = parseFloat(calculatorDisplayContent.textContent);
+        console.log(secondNumber);
+    } else {
+
+    }
+    console.log(`
+    First Number: ${firstNumber}
+    Second Number: ${secondNumber}
+    Operator: ${operator}`)
+    // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
+    if (operator) {
+        solution = operate(operator, firstNumber, secondNumber);
+        calculatorDisplayContent.textContent = '';
+        calculatorDisplayContent.textContent = `${solution}`;
+
+        firstNumber = null;
+        secondNumber = null;
+        // the current solution inside the calculator display will now be the first Number
+        firstNumber = solution;
+    }
+     
+    operator = "-"
+});
+
+btnZero.addEventListener('click', () => {
+    calculatorDisplayContent.textContent += '0';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+});
+
+btnDecimal.addEventListener('click', () => {
+
+
+    calculatorDisplayContent.textContent += '.';
+    calculatorDisplay.appendChild(calculatorDisplayContent);
+
+    if (calculatorDisplayContent.textContent.includes(".")) {
+        btnDecimal.classList.add("cover");
+        btnDecimal.classList.add("phase-out");
+    }
+
+});
+
+btnEqual.addEventListener('click', () => {
+    secondNumber = parseFloat(calculatorDisplayContent.textContent);
+    console.log(firstNumber, secondNumber, operator);
+    solution = operate(operator, firstNumber, secondNumber);
+    calculatorDisplayContent.textContent = '';
+    calculatorDisplayContent.textContent = `${solution}`;
+
+    // reset the first and second numbers to blank
+    firstNumber = null;
+    secondNumber = null;
+
+    // reset the operator to blank
+    operator = null;
+
+    // the current solution inside the calculator display will now be the first Number
+    firstNumber = solution;
+});
+
+btnAdd.addEventListener('click', () => {
+    console.log(`
+    First Number: ${firstNumber}
+    Second Number: ${secondNumber}
+    Operator: ${operator}`)
+    if (!firstNumber) {
+        firstNumber = parseFloat(calculatorDisplayContent.textContent);
+        console.log(firstNumber);
+    } else if (!secondNumber) {
+        secondNumber = parseFloat(calculatorDisplayContent.textContent);
+        console.log(secondNumber);
+    }
+    console.log(`
+    First Number: ${firstNumber}
+    Second Number: ${secondNumber}
+    Operator: ${operator}`)
+    // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
+    if (operator) {
+        solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+        calculatorDisplayContent.textContent = '';
+        calculatorDisplayContent.textContent = `${solution}`;
+
+        firstNumber = null;
+        secondNumber = null;
+
+        // the current solution inside the calculator display will now be the first Number
+        firstNumber = solution;
+    }
+     
+    operator = "+"
+});
+
+btnClear.addEventListener('click', () => {
+    firstNumber = null;
+    secondNumber = null;
+    solution = null;
+    operator = null;
+    console.log(`CLEAR VARIABLES:
+                First Number: ${firstNumber}
+                Second Number: ${secondNumber}
+                Solution: ${solution}
+                Operator: ${operator}`)
+    calculatorDisplayContent.textContent = '';
+    btnDecimal.classList.remove("cover");
+    btnDecimal.classList.remove("phase-out");
+});
+
+/* MATH FUNCTIONS */
+function add(num1, num2) {
+    return num1 + num2;
+
+}
+
+function subtract(num1, num2) {
+    return num1 - num2;
+}
+
+function multiply(num1, num2) {
+    return num1 * num2;
+}
+
+function divide(num1, num2) {
+    return num1 / num2;
+}
+
+function operate(operator, num1, num2) {
+    if (operator == "+") {
+        console.log(`Adding ${num1} + ${num2}`)
+        return Number(add(num1, num2)).toFixed(3);
+    } else if (operator == "-") {
+        console.log(`Subtracting ${num1} - ${num2}`)
+        return Number(subtract(num1, num2)).toFixed(3);
+    } else if (operator == "×") {
+        console.log(`Multiplying ${num1} × ${num2}`)
+        return multiply(num1, num2);
+    } else if (operator == "÷") {
+        console.log(`Dividing ${num1} ÷ ${num2}`)
+        return divide(num1, num2);
+    }
+}
 
