@@ -33,42 +33,38 @@ const btnClear = document.getElementById('button-clear');
 btnSeven.addEventListener('click', () => {
     console.log(firstNumber, secondNumber, operator);
     if (firstNumber) {
-        if (!secondNumber) {
-            calculatorDisplayContent.textContent = '';
             calculatorDisplayContent.textContent += '7';
             calculatorDisplay.appendChild(calculatorDisplayContent);
-        }
+            phaseInAllExpressions();
     } else {
         calculatorDisplayContent.textContent += '7';
         calculatorDisplay.appendChild(calculatorDisplayContent);
+        phaseInAllExpressions();
     }
 
 });
 
 btnEight.addEventListener('click', () => {
     if (firstNumber) {
-        if (!secondNumber) {
-            calculatorDisplayContent.textContent = '';
             calculatorDisplayContent.textContent += '8';
             calculatorDisplay.appendChild(calculatorDisplayContent);
-        }
+            phaseInAllExpressions();
     } else {
         calculatorDisplayContent.textContent += '8';
         calculatorDisplay.appendChild(calculatorDisplayContent);
+        phaseInAllExpressions();
     }
 });
 
 btnNine.addEventListener('click', () => {
     if (firstNumber) {
-        if (!secondNumber) {
-            // clear display to display second number, if i.e. "firstNumber +" has already been entered
-            calculatorDisplayContent.textContent = '';
             calculatorDisplayContent.textContent += '9';
             calculatorDisplay.appendChild(calculatorDisplayContent);
-        }
+            phaseInAllExpressions();
     } else {
         calculatorDisplayContent.textContent += '9';
         calculatorDisplay.appendChild(calculatorDisplayContent);
+        phaseInAllExpressions();
     }
 
 });
@@ -134,29 +130,36 @@ btnSubtract.addEventListener('click', () => {
     if (!firstNumber) {
         firstNumber = parseFloat(calculatorDisplayContent.textContent);
         console.log(firstNumber);
-    } else if (!secondNumber && boolean) {
-        secondNumber = parseFloat(calculatorDisplayContent.textContent);
-        console.log(secondNumber);
-    } else {
-
+        calculatorDisplayContent.textContent = '';
     }
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
     Operator: ${operator}`)
+
     // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
     if (operator) {
-        solution = operate(operator, firstNumber, secondNumber);
-        calculatorDisplayContent.textContent = '';
-        calculatorDisplayContent.textContent = `${solution}`;
 
-        firstNumber = null;
-        secondNumber = null;
-        // the current solution inside the calculator display will now be the first Number
-        firstNumber = solution;
+        console.log(`Operator length: ${operator.length}`)
+
+            console.log("Operator has already been entered, evaluating")
+            // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
+
+            secondNumber = parseFloat(calculatorDisplayContent.textContent);
+            solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+            calculatorDisplayContent.textContent = '';
+            calculatorDisplayContent.textContent = `${solution}`;
+
+            firstNumber = null;
+            secondNumber = null;
+            // the current solution inside the calculator display will now be the first Number
+            firstNumber = solution;
+            phaseOutAllExpressions();
     }
-     
+  
     operator = "-"
+    phaseOutAllExpressions();
+    
 });
 
 btnZero.addEventListener('click', () => {
@@ -172,6 +175,7 @@ btnDecimal.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
 
     if (calculatorDisplayContent.textContent.includes(".")) {
+        phaseOut(btnDecimal);
         btnDecimal.classList.add("cover");
         btnDecimal.classList.add("phase-out");
     }
@@ -181,7 +185,7 @@ btnDecimal.addEventListener('click', () => {
 btnEqual.addEventListener('click', () => {
     secondNumber = parseFloat(calculatorDisplayContent.textContent);
     console.log(firstNumber, secondNumber, operator);
-    solution = operate(operator, firstNumber, secondNumber);
+    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
     calculatorDisplayContent.textContent = '';
     calculatorDisplayContent.textContent = `${solution}`;
 
@@ -204,16 +208,19 @@ btnAdd.addEventListener('click', () => {
     if (!firstNumber) {
         firstNumber = parseFloat(calculatorDisplayContent.textContent);
         console.log(firstNumber);
-    } else if (!secondNumber) {
+    }
+    /*} else if (!secondNumber) {
         secondNumber = parseFloat(calculatorDisplayContent.textContent);
         console.log(secondNumber);
-    }
+    }*/
+
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
     Operator: ${operator}`)
     // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
     if (operator) {
+        secondNumber = parseFloat(calculatorDisplayContent.textContent);
         solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
         calculatorDisplayContent.textContent = '';
         calculatorDisplayContent.textContent = `${solution}`;
@@ -239,8 +246,8 @@ btnClear.addEventListener('click', () => {
                 Solution: ${solution}
                 Operator: ${operator}`)
     calculatorDisplayContent.textContent = '';
-    btnDecimal.classList.remove("cover");
-    btnDecimal.classList.remove("phase-out");
+    phaseInAllExpressions();
+    phaseIn(btnDecimal);
 });
 
 /* MATH FUNCTIONS */
@@ -274,6 +281,32 @@ function operate(operator, num1, num2) {
     } else if (operator == "÷") {
         console.log(`Dividing ${num1} ÷ ${num2}`)
         return divide(num1, num2);
+    }
+}
+
+function phaseOut(btn) {
+    btn.classList.add('cover');
+    btn.classList.add('phase-out');
+}
+
+function phaseIn(btn) {
+    btn.classList.remove('cover');
+    btn.classList.remove('phase-out');
+}
+
+function phaseOutAllExpressions() {
+    btns = document.querySelectorAll('.calculator-button-expression');
+    for (btn of btns) {
+        btn.classList.add('cover');
+        btn.classList.add('phase-out');
+    }
+}
+
+function phaseInAllExpressions() {
+    btns = document.querySelectorAll('.calculator-button-expression');
+    for (btn of btns) {
+        btn.classList.remove('cover');
+        btn.classList.remove('phase-out');
     }
 }
 

@@ -10,5 +10,7 @@
 			"path": "../TheOdinProject-JavaScript-RockPaperScissorsGUI-2"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "TheOdinProject-JavaScript-GUICalculator-2"
+	}
 }
