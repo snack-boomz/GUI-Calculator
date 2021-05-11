@@ -7,6 +7,4 @@ This is my re-run of an incomplete project from my last iteration in march 2019.
 All Topics: DOM manipulation, Error Handling, Template literals, math.random, Modern For loops, ForEach, Event Listeners, Arrow Functions, const variables
 
 ### Upcoming
-Mobile Support
-keyboard support
-Backspace button
+Mobile Support, keyboard support, Backspace button
