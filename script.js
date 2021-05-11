@@ -11,11 +11,6 @@ let firstNumber = null;
 let secondNumber = null;
 let operator = null;
 
-
-/* SET EXPRESSIONS TO BE INITIALLY PHASED OUT */
-phaseOutAllExpressions();
-
-
 /* KEEP EQUALS PHASED OUT UNTIL EXPRESSION IS AVAILABLE */
 
 /* CALCULATOR BUTTONS */
@@ -37,24 +32,25 @@ const btnEqual = document.getElementById('button-equal');
 const btnAdd = document.getElementById('button-add');
 const btnClear = document.getElementById('button-clear');
 
-btnSeven.addEventListener('click', () => {
-    checkIfEvaluationIsSolvable();
+/* SET EXPRESSIONS TO BE INITIALLY PHASED OUT */
+phaseOutAllExpressions();
+phaseOut(btnEqual);
 
+
+btnSeven.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '7';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
-
 
 });
 
 btnEight.addEventListener('click', () => {
-    checkIfEvaluationIsSolvable();
-    console.log(firstNumber, secondNumber, operator);
 
     calculatorDisplayContent.textContent += '8';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
-    
 });
 
 btnNine.addEventListener('click', () => {
@@ -62,11 +58,13 @@ btnNine.addEventListener('click', () => {
 
     calculatorDisplayContent.textContent += '9';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
     
 });
 
 btnDivide.addEventListener('click', () => {
+    phaseInAllNumbers();
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
@@ -101,6 +99,7 @@ btnDivide.addEventListener('click', () => {
 btnFour.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '4';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
@@ -108,6 +107,7 @@ btnFour.addEventListener('click', () => {
 btnFive.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '5';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
@@ -115,11 +115,13 @@ btnFive.addEventListener('click', () => {
 btnSix.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '6';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
 
 btnMultiply.addEventListener('click', () => {
+    phaseInAllNumbers();
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
@@ -154,6 +156,7 @@ btnMultiply.addEventListener('click', () => {
 btnOne.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '1';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
@@ -161,6 +164,7 @@ btnOne.addEventListener('click', () => {
 btnTwo.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '2';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
@@ -168,11 +172,13 @@ btnTwo.addEventListener('click', () => {
 btnThree.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '3';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
 
 btnSubtract.addEventListener('click', () => {
+    phaseInAllNumbers();
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
@@ -207,13 +213,12 @@ btnSubtract.addEventListener('click', () => {
 btnZero.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '0';
     calculatorDisplay.appendChild(calculatorDisplayContent);
+    checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
 
 });
 
 btnDecimal.addEventListener('click', () => {
-
-
     calculatorDisplayContent.textContent += '.';
     calculatorDisplay.appendChild(calculatorDisplayContent);
 
@@ -226,12 +231,7 @@ btnDecimal.addEventListener('click', () => {
 btnEqual.addEventListener('click', () => {
     phaseOutAllNumbers();
     // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
-    tempArray = Array.from(calculatorDisplayContent.textContent);
-    console.log(tempArray);
-    indexOfOperator = tempArray.lastIndexOf(`${operator}`);
-    console.log(indexOfOperator);
-    secondNumber = parseFloat(tempArray.slice(indexOfOperator + 1).join(''))
-    console.log(secondNumber);
+    secondNumber = grabSecondNumberFromDisplay();
     solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
     calculatorDisplayContent.textContent = '';
     calculatorDisplayContent.textContent = `${solution}`;
@@ -245,9 +245,13 @@ btnEqual.addEventListener('click', () => {
 
     // the current solution inside the calculator display will now be the first Number
     firstNumber = solution;
+
+    // phase out Equals key
+    phaseOut(btnEqual);
 });
 
 btnAdd.addEventListener('click', () => {
+    phaseInAllNumbers();
     console.log(`
     First Number: ${firstNumber}
     Second Number: ${secondNumber}
@@ -293,6 +297,7 @@ btnClear.addEventListener('click', () => {
     phaseOutAllExpressions();
     phaseInAllNumbers();
     phaseIn(btnDecimal);
+    phaseOut(btnEqual);
 });
 
 /* MATH FUNCTIONS */
@@ -310,7 +315,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return num1 / num2;
+        return num1 / num2;
 }
 
 function operate(operator, num1, num2) {
@@ -324,8 +329,16 @@ function operate(operator, num1, num2) {
         console.log(`Multiplying ${num1} × ${num2}`)
         return multiply(num1, num2);
     } else if (operator == "÷") {
-        console.log(`Dividing ${num1} ÷ ${num2}`)
-        return divide(num1, num2);
+        if (num1 == 0 || num2 == 0) {
+            phaseOutAllNumbers();
+            phaseOutAllExpressions();
+            phaseOut(btnEqual);
+            phaseOut(btnDecimal);
+            return "Nice try. You divide by 0, you ruin the fun. Try again.";
+        } else {
+            console.log(`Dividing ${num1} ÷ ${num2}`)
+            return divide(num1, num2);
+        }
     }
 }
 
@@ -344,15 +357,23 @@ function grabSecondNumberFromDisplay() {
     indexOfOperator = tempArray.lastIndexOf(`${operator}`);
     console.log(indexOfOperator);
     return secondNumber = parseFloat(tempArray.slice(indexOfOperator + 1).join(''))
-    console.log(secondNumber);
+    
 }
 
 function checkIfEvaluationIsSolvable() {
-    if (Number.isInteger(grabSecondNumberFromDisplay())) {
-        console.log(`Second Number is ${grabSecondNumberFromDisplay()}`)
-        phaseIn(btnEqual);
+    if (operator) {
+        console.log("Operator exists");
+        
+        if (grabSecondNumberFromDisplay()) { 
+            console.log(`Second Number is ${grabSecondNumberFromDisplay()}`)
+            phaseIn(btnEqual);
+        } else if (grabSecondNumberFromDisplay() == 0) {
+            console.log(`Second Number is ${grabSecondNumberFromDisplay()}`)
+            phaseIn(btnEqual);
+        }
     }
 }
+
 
 function phaseOut(btn) {
     btn.classList.add('cover');
