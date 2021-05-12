@@ -4,7 +4,7 @@ The Odin Project Web Development Online Curriculum: Foundations
 ## Project: GUI Calculator, take 2
 This is my re-run of an incomplete project from my last iteration in march 2019.
 
-All Topics: DOM manipulation, Error Handling, Template literals, math.random, Modern For loops, ForEach, Event Listeners, Arrow Functions, const variables
+All Topics: DOM manipulation, Error Handling, Template literals, math.random, Modern For loops, Event Listeners: click and keydown, keyboard support, Arrow Functions, const variables, switch statements, null values, array methods, ReGeX, Simple math 
 
-### Upcoming
-Mobile Support, keyboard support, Backspace button
+Completed: 12 May 2021
+
