@@ -70,7 +70,7 @@ button .fa-play {
 
 #calculator-container {
     display: grid;
-    height: 400px;
+    height: 450px;
     width: 35%;
     padding: 20px;
     margin: auto;
@@ -81,6 +81,7 @@ button .fa-play {
                          'button-four button-five button-six button-multiply'
                          'button-one button-two button-three button-subtract'
                          'button-zero button-decimal button-equal button-add'
+                         'button-backspace button-backspace button-backspace button-backspace'
                          'button-clear button-clear button-clear button-clear';
 
     grid-gap: 5px;
@@ -156,6 +157,10 @@ button .fa-play {
 
 #button-add {
     grid-area: button-add;
+}
+
+#button-backspace {
+    grid-area: button-backspace;
 }
 
 #button-clear {

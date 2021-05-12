@@ -30,6 +30,7 @@ const btnZero = document.getElementById('button-zero');
 const btnDecimal = document.getElementById('button-decimal');
 const btnEqual = document.getElementById('button-equal');
 const btnAdd = document.getElementById('button-add');
+const btnBackspace = document.getElementById('button-backspace');
 const btnClear = document.getElementById('button-clear');
 
 /* SET EXPRESSIONS TO BE INITIALLY PHASED OUT */
@@ -42,24 +43,24 @@ btnSeven.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
 btnEight.addEventListener('click', () => {
-
     calculatorDisplayContent.textContent += '8';
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 });
 
 btnNine.addEventListener('click', () => {
-    console.log(firstNumber, secondNumber, operator);
-
     calculatorDisplayContent.textContent += '9';
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
     
 });
 
@@ -94,6 +95,7 @@ btnDivide.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     phaseOutAllExpressions();
     phaseIn(btnDecimal);
+    checkForOverflow();
 });
 
 btnFour.addEventListener('click', () => {
@@ -101,6 +103,7 @@ btnFour.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -109,6 +112,7 @@ btnFive.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -117,6 +121,7 @@ btnSix.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -151,6 +156,7 @@ btnMultiply.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     phaseOutAllExpressions();
     phaseIn(btnDecimal);
+    checkForOverflow();
 });
 
 btnOne.addEventListener('click', () => {
@@ -158,6 +164,7 @@ btnOne.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -166,6 +173,7 @@ btnTwo.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -174,6 +182,7 @@ btnThree.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
@@ -208,6 +217,7 @@ btnSubtract.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     phaseOutAllExpressions();
     phaseIn(btnDecimal);
+    checkForOverflow();
 });
 
 btnZero.addEventListener('click', () => {
@@ -215,13 +225,15 @@ btnZero.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     checkIfEvaluationIsSolvable();
     phaseInAllExpressions();
+    checkForOverflow();
 
 });
 
 btnDecimal.addEventListener('click', () => {
     calculatorDisplayContent.textContent += '.';
     calculatorDisplay.appendChild(calculatorDisplayContent);
-
+    phaseInAllNumbers();
+    checkForOverflow();
     if (calculatorDisplayContent.textContent.includes(".")) {
         phaseOut(btnDecimal);
     }
@@ -229,6 +241,7 @@ btnDecimal.addEventListener('click', () => {
 });
 
 btnEqual.addEventListener('click', () => {
+    checkForSpace();
     phaseOutAllNumbers();
     // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
     secondNumber = grabSecondNumberFromDisplay();
@@ -281,6 +294,34 @@ btnAdd.addEventListener('click', () => {
     calculatorDisplay.appendChild(calculatorDisplayContent);
     phaseOutAllExpressions();
     phaseIn(btnDecimal);
+    checkForOverflow();
+});
+
+btnBackspace.addEventListener('click', () => {
+    //calculatorDisplayContent.textContent = calculatorDisplayContent.textContent.substring(0, -1);
+    tempArray = Array.from(calculatorDisplayContent.textContent);
+    erased = tempArray.pop();
+    calculatorDisplayContent.textContent = tempArray.join('');
+    checkForBlank();
+    checkIfEvaluationIsSolvable();
+    checkForOverflow();
+    checkForSpace();
+
+    checkForZeroThroughNine = /[0-9]/i;
+
+
+    if (erased == '+' || erased == '-' || erased == '×' || erased == '÷') {
+        phaseInAllExpressions();
+        operator = null;
+        phaseOut(btnEqual)
+    } else if (erased == '.') {
+        phaseIn(btnDecimal);
+    } else if (erased == checkForZeroThroughNine && !operator) {
+        phaseOut(btnEqual);
+        phaseInAllNumbers();
+    } else if (erased == checkForZeroThroughNine) {
+        phaseInAllNumbers();
+    }
 });
 
 btnClear.addEventListener('click', () => {
@@ -374,6 +415,41 @@ function checkIfEvaluationIsSolvable() {
     }
 }
 
+function checkForOverflow() {
+    if (calculatorDisplayContent.textContent.length > 22) {
+        phaseOutAllNumbers();
+        phaseOutAllExpressions();
+        phaseOut(btnDecimal);
+    }
+}
+
+function checkForBlank() {
+    if (calculatorDisplayContent.textContent == '') {
+        firstNumber = null;
+        secondNumber = null;
+        solution = null;
+        operator = null;
+        console.log(`CLEAR VARIABLES:
+                    First Number: ${firstNumber}
+                    Second Number: ${secondNumber}
+                    Solution: ${solution}
+                    Operator: ${operator}`)
+        calculatorDisplayContent.textContent = '';
+        phaseOutAllExpressions();
+        phaseInAllNumbers();
+        phaseIn(btnDecimal);
+        phaseOut(btnEqual);
+    }
+}
+
+function checkForSpace() {
+    console.log("checking for space");
+    if (calculatorDisplayContent.textContent.length <= 22) {
+        phaseInAllExpressions();
+        phaseInAllNumbers();
+        
+    }
+}
 
 function phaseOut(btn) {
     btn.classList.add('cover');
