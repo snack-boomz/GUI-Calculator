@@ -378,38 +378,44 @@ document.addEventListener('keydown', event => {
                 checkForOverflow();
                 break;
             case '/':
-                phaseInAllNumbers();
-                console.log(`
-                First Number: ${firstNumber}
-                Second Number: ${secondNumber}
-                Operator: ${operator}`)
-                firstNumber = parseFloat(calculatorDisplayContent.textContent);
-                // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
-                if (operator) {
-                        // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
-                        console.log("Operator has already been entered, evaluating")
-                        
-                        
-                        secondNumber = grabSecondNumberFromDisplay();
-                        solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                        calculatorDisplayContent.textContent = '';
-                        calculatorDisplayContent.textContent = `${solution}`;
-            
-                        firstNumber = null;
-                        secondNumber = null;
-                        // the current solution inside the calculator display will now be the first Number
-                        firstNumber = solution;
-                        phaseOutAllExpressions();
-                        console.log("Please enter a second number: ");
+                if (btnDivide.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    phaseInAllNumbers();
+                    console.log(`
+                    First Number: ${firstNumber}
+                    Second Number: ${secondNumber}
+                    Operator: ${operator}`)
+                    firstNumber = parseFloat(calculatorDisplayContent.textContent);
+                    // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
+                    if (operator) {
+                            // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
+                            console.log("Operator has already been entered, evaluating")
+                            
+                            
+                            secondNumber = grabSecondNumberFromDisplay();
+                            solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                            calculatorDisplayContent.textContent = '';
+                            calculatorDisplayContent.textContent = `${solution}`;
+                
+                            firstNumber = null;
+                            secondNumber = null;
+                            // the current solution inside the calculator display will now be the first Number
+                            firstNumber = solution;
+                            phaseOutAllExpressions();
+                            console.log("Please enter a second number: ");
+                    }
+                
+                    operator = "÷"
+                    calculatorDisplayContent.textContent += '÷';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    phaseOutAllExpressions();
+                    phaseIn(btnDecimal);
+                    checkForOverflow();
+                    break;
                 }
-              
-                operator = "÷"
-                calculatorDisplayContent.textContent += '÷';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                phaseOutAllExpressions();
-                phaseIn(btnDecimal);
-                checkForOverflow();
-                break;
+                
             case '4':
                 calculatorDisplayContent.textContent += '4';
                 calculatorDisplay.appendChild(calculatorDisplayContent);
@@ -432,7 +438,11 @@ document.addEventListener('keydown', event => {
                 checkForOverflow();
                 break;
             case '*':
-                phaseInAllNumbers();
+                if (btnMultiply.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    phaseInAllNumbers();
                 console.log(`
                 First Number: ${firstNumber}
                 Second Number: ${secondNumber}
@@ -464,6 +474,7 @@ document.addEventListener('keydown', event => {
                 phaseIn(btnDecimal);
                 checkForOverflow();
                 break;
+                }
             case '1':
                 calculatorDisplayContent.textContent += '1';
                 calculatorDisplay.appendChild(calculatorDisplayContent);
@@ -486,38 +497,44 @@ document.addEventListener('keydown', event => {
                 checkForOverflow();
                 break;
             case '-':
-                phaseInAllNumbers();
-                console.log(`
-                First Number: ${firstNumber}
-                Second Number: ${secondNumber}
-                Operator: ${operator}`)
-                firstNumber = parseFloat(calculatorDisplayContent.textContent);
-                // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
-                if (operator) {
-                        // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
-                        console.log("Operator has already been entered, evaluating")
-                        
-                        
-                        secondNumber = grabSecondNumberFromDisplay();
-                        solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                        calculatorDisplayContent.textContent = '';
-                        calculatorDisplayContent.textContent = `${solution}`;
-            
-                        firstNumber = null;
-                        secondNumber = null;
-                        // the current solution inside the calculator display will now be the first Number
-                        firstNumber = solution;
-                        phaseOutAllExpressions();
-                        console.log("Please enter a second number: ");
+                if (btnSubtract.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    phaseInAllNumbers();
+                    console.log(`
+                    First Number: ${firstNumber}
+                    Second Number: ${secondNumber}
+                    Operator: ${operator}`)
+                    firstNumber = parseFloat(calculatorDisplayContent.textContent);
+                    // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
+                    if (operator) {
+                            // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
+                            console.log("Operator has already been entered, evaluating")
+                            
+                            
+                            secondNumber = grabSecondNumberFromDisplay();
+                            solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                            calculatorDisplayContent.textContent = '';
+                            calculatorDisplayContent.textContent = `${solution}`;
+                
+                            firstNumber = null;
+                            secondNumber = null;
+                            // the current solution inside the calculator display will now be the first Number
+                            firstNumber = solution;
+                            phaseOutAllExpressions();
+                            console.log("Please enter a second number: ");
+                    }
+                  
+                    operator = "-"
+                    calculatorDisplayContent.textContent += '-';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    phaseOutAllExpressions();
+                    phaseIn(btnDecimal);
+                    checkForOverflow();
+                    break;
                 }
-              
-                operator = "-"
-                calculatorDisplayContent.textContent += '-';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                phaseOutAllExpressions();
-                phaseIn(btnDecimal);
-                checkForOverflow();
-                break;
+
             case '0':
                 calculatorDisplayContent.textContent += '0';
                 calculatorDisplay.appendChild(calculatorDisplayContent);
@@ -526,14 +543,20 @@ document.addEventListener('keydown', event => {
                 checkForOverflow();
                 break;
             case '.':
-                calculatorDisplayContent.textContent += '.';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                phaseInAllNumbers();
-                checkForOverflow();
-                if (calculatorDisplayContent.textContent.includes(".")) {
-                    phaseOut(btnDecimal);
+                if (btnDecimal.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '.';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    phaseInAllNumbers();
+                    checkForOverflow();
+                    if (calculatorDisplayContent.textContent.includes(".")) {
+                        phaseOut(btnDecimal);
+                    }
+                    break;
                 }
-                break;
+
             case '=':
                 if (btnEqual.classList.contains('phase-out')) {
                     console.log("cannot evaluate!");
@@ -589,39 +612,44 @@ document.addEventListener('keydown', event => {
                     break;
                 }
             case '+':
-                phaseInAllNumbers();
-                console.log(`
-                First Number: ${firstNumber}
-                Second Number: ${secondNumber}
-                Operator: ${operator}`)
-                firstNumber = parseFloat(calculatorDisplayContent.textContent);
-                // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
-                if (operator) {
-    
-                    console.log("Operator has already been entered, evaluating")
-                    // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
-                    secondNumber = grabSecondNumberFromDisplay();
-                    console.log(secondNumber);
-                    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                    calculatorDisplayContent.textContent = '';
-                    calculatorDisplayContent.textContent = `${solution}`;
-    
-                    firstNumber = null;
-                    secondNumber = null;
-                    // the current solution inside the calculator display will now be the first Number
-                    firstNumber = solution;
+                if (btnAdd.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {    
+                    phaseInAllNumbers();
+                    console.log(`
+                    First Number: ${firstNumber}
+                    Second Number: ${secondNumber}
+                    Operator: ${operator}`)
+                    firstNumber = parseFloat(calculatorDisplayContent.textContent);
+                    // if operator button is pressed again when an operator has already been added, then evaluate first and second numbers
+                    if (operator) {
+        
+                        console.log("Operator has already been entered, evaluating")
+                        // if an operator has already been entered, don't allow two operators to be entered consecutively checking length
+                        secondNumber = grabSecondNumberFromDisplay();
+                        console.log(secondNumber);
+                        solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                        calculatorDisplayContent.textContent = '';
+                        calculatorDisplayContent.textContent = `${solution}`;
+        
+                        firstNumber = null;
+                        secondNumber = null;
+                        // the current solution inside the calculator display will now be the first Number
+                        firstNumber = solution;
+                        phaseOutAllExpressions();
+                        console.log("Please enter a second number: ");
+                    
+                    }
+        
+                    operator = "+"
+                    calculatorDisplayContent.textContent += '+'
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
                     phaseOutAllExpressions();
-                    console.log("Please enter a second number: ");
-                
+                    phaseIn(btnDecimal);
+                    checkForOverflow();
+                    break;
                 }
-      
-                operator = "+"
-                calculatorDisplayContent.textContent += '+'
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                phaseOutAllExpressions();
-                phaseIn(btnDecimal);
-                checkForOverflow();
-                break;
             case 'backspace':
                 //calculatorDisplayContent.textContent = calculatorDisplayContent.textContent.substring(0, -1);
                 tempArray = Array.from(calculatorDisplayContent.textContent);
@@ -679,49 +707,59 @@ document.addEventListener('keydown', event => {
                 }
                 break;
             case '=':
-                checkForSpace();
-                phaseOutAllNumbers();
-                // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
-                secondNumber = grabSecondNumberFromDisplay();
-                solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                calculatorDisplayContent.textContent = '';
-                calculatorDisplayContent.textContent = `${solution}`;
-            
-                // reset the first and second numbers to blank
-                firstNumber = null;
-                secondNumber = null;
-            
-                // reset the operator to blank
-                operator = null;
-            
-                // the current solution inside the calculator display will now be the first Number
-                firstNumber = solution;
-            
-                // phase out Equals key
-                phaseOut(btnEqual);
-                break;
+                if (btnEqual.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    checkForSpace();
+                    phaseOutAllNumbers();
+                    // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
+                    secondNumber = grabSecondNumberFromDisplay();
+                    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                    calculatorDisplayContent.textContent = '';
+                    calculatorDisplayContent.textContent = `${solution}`;
+                
+                    // reset the first and second numbers to blank
+                    firstNumber = null;
+                    secondNumber = null;
+                
+                    // reset the operator to blank
+                    operator = null;
+                
+                    // the current solution inside the calculator display will now be the first Number
+                    firstNumber = solution;
+                
+                    // phase out Equals key
+                    phaseOut(btnEqual);
+                    break;
+                }
             case 'enter':
-                checkForSpace();
-                phaseOutAllNumbers();
-                // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
-                secondNumber = grabSecondNumberFromDisplay();
-                solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                calculatorDisplayContent.textContent = '';
-                calculatorDisplayContent.textContent = `${solution}`;
-            
-                // reset the first and second numbers to blank
-                firstNumber = null;
-                secondNumber = null;
-            
-                // reset the operator to blank
-                operator = null;
-            
-                // the current solution inside the calculator display will now be the first Number
-                firstNumber = solution;
-            
-                // phase out Equals key
-                phaseOut(btnEqual);
-                break;
+                if (btnEqual.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    checkForSpace();
+                    phaseOutAllNumbers();
+                    // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
+                    secondNumber = grabSecondNumberFromDisplay();
+                    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                    calculatorDisplayContent.textContent = '';
+                    calculatorDisplayContent.textContent = `${solution}`;
+                
+                    // reset the first and second numbers to blank
+                    firstNumber = null;
+                    secondNumber = null;
+                
+                    // reset the operator to blank
+                    operator = null;
+                
+                    // the current solution inside the calculator display will now be the first Number
+                    firstNumber = solution;
+                
+                    // phase out Equals key
+                    phaseOut(btnEqual);
+                    break;
+                }
             default:
                 console.log("invalid key.");
                 break;
