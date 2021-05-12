@@ -194,6 +194,10 @@ button .fa-play {
     transition-duration: 0.1s;
 }
 
+#calculator-container > .calculator-button-expression {
+    color: darkred;
+}
+
 .cover {
     background: #333333 !important;
 }
