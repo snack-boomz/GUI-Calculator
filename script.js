@@ -535,49 +535,59 @@ document.addEventListener('keydown', event => {
                 }
                 break;
             case '=':
-                checkForSpace();
-                phaseOutAllNumbers();
-                // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
-                secondNumber = grabSecondNumberFromDisplay();
-                solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                calculatorDisplayContent.textContent = '';
-                calculatorDisplayContent.textContent = `${solution}`;
-            
-                // reset the first and second numbers to blank
-                firstNumber = null;
-                secondNumber = null;
-            
-                // reset the operator to blank
-                operator = null;
-            
-                // the current solution inside the calculator display will now be the first Number
-                firstNumber = solution;
-            
-                // phase out Equals key
-                phaseOut(btnEqual);
-                break;
+                if (btnEqual.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    checkForSpace();
+                    phaseOutAllNumbers();
+                    // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
+                    secondNumber = grabSecondNumberFromDisplay();
+                    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                    calculatorDisplayContent.textContent = '';
+                    calculatorDisplayContent.textContent = `${solution}`;
+                
+                    // reset the first and second numbers to blank
+                    firstNumber = null;
+                    secondNumber = null;
+                
+                    // reset the operator to blank
+                    operator = null;
+                
+                    // the current solution inside the calculator display will now be the first Number
+                    firstNumber = solution;
+                
+                    // phase out Equals key
+                    phaseOut(btnEqual);
+                    break;
+                }
             case 'enter':
-                checkForSpace();
-                phaseOutAllNumbers();
-                // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
-                secondNumber = grabSecondNumberFromDisplay();
-                solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
-                calculatorDisplayContent.textContent = '';
-                calculatorDisplayContent.textContent = `${solution}`;
-            
-                // reset the first and second numbers to blank
-                firstNumber = null;
-                secondNumber = null;
-            
-                // reset the operator to blank
-                operator = null;
-            
-                // the current solution inside the calculator display will now be the first Number
-                firstNumber = solution;
-            
-                // phase out Equals key
-                phaseOut(btnEqual);
-                break;
+                if (btnEqual.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    checkForSpace();
+                    phaseOutAllNumbers();
+                    // convert string to array, identify operator, and pull secondNumber from slicedArray, like so: tempArray.slice(indexOfOperator + 1)
+                    secondNumber = grabSecondNumberFromDisplay();
+                    solution = operate(operator, parseFloat(firstNumber), parseFloat(secondNumber));
+                    calculatorDisplayContent.textContent = '';
+                    calculatorDisplayContent.textContent = `${solution}`;
+                
+                    // reset the first and second numbers to blank
+                    firstNumber = null;
+                    secondNumber = null;
+                
+                    // reset the operator to blank
+                    operator = null;
+                
+                    // the current solution inside the calculator display will now be the first Number
+                    firstNumber = solution;
+                
+                    // phase out Equals key
+                    phaseOut(btnEqual);
+                    break;
+                }
             case '+':
                 phaseInAllNumbers();
                 console.log(`
@@ -641,7 +651,7 @@ document.addEventListener('keydown', event => {
                 break;
         }
     } else {
-        
+
         switch(key) {
             case 'backspace':
                 //calculatorDisplayContent.textContent = calculatorDisplayContent.textContent.substring(0, -1);
