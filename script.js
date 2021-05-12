@@ -357,26 +357,42 @@ document.addEventListener('keydown', event => {
         switch(key) {
 
             case '7':
-                calculatorDisplayContent.textContent += '7';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnSeven.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '7';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
+                
             case '8':
-                calculatorDisplayContent.textContent += '8';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnEight.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '8';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '9':
-                calculatorDisplayContent.textContent += '9';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnNine.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '9';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '/':
                 if (btnDivide.classList.contains('phase-out')) {
                     console.log("cannot evaluate!");
@@ -417,26 +433,41 @@ document.addEventListener('keydown', event => {
                 }
                 
             case '4':
-                calculatorDisplayContent.textContent += '4';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnFour.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '4';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '5':
-                calculatorDisplayContent.textContent += '5';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnFive.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '5';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '6':
-                calculatorDisplayContent.textContent += '6';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnSix.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '6';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '*':
                 if (btnMultiply.classList.contains('phase-out')) {
                     console.log("cannot evaluate!");
@@ -476,26 +507,42 @@ document.addEventListener('keydown', event => {
                 break;
                 }
             case '1':
-                calculatorDisplayContent.textContent += '1';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnOne.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '1';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '2':
-                calculatorDisplayContent.textContent += '2';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnTwo.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '2';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
+                break;
+                }
                 break;
             case '3':
-                calculatorDisplayContent.textContent += '3';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnThree.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '3';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '-':
                 if (btnSubtract.classList.contains('phase-out')) {
                     console.log("cannot evaluate!");
@@ -536,12 +583,17 @@ document.addEventListener('keydown', event => {
                 }
 
             case '0':
-                calculatorDisplayContent.textContent += '0';
-                calculatorDisplay.appendChild(calculatorDisplayContent);
-                checkIfEvaluationIsSolvable();
-                phaseInAllExpressions();
-                checkForOverflow();
+                if (btnZero.classList.contains('phase-out')) {
+                    console.log("cannot evaluate!");
+                    break;
+                } else {
+                    calculatorDisplayContent.textContent += '0';
+                    calculatorDisplay.appendChild(calculatorDisplayContent);
+                    checkIfEvaluationIsSolvable();
+                    phaseInAllExpressions();
+                    checkForOverflow();
                 break;
+                }
             case '.':
                 if (btnDecimal.classList.contains('phase-out')) {
                     console.log("cannot evaluate!");
